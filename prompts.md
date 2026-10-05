@@ -55,23 +55,4 @@ Se acabó el tiempo de la parte A. No la modifiques y no sigas buscando en el c�
 Añade este prompt a prompts.md como Prompt 3. Modelo: Sonnet 5.5. Herramienta: Claude Code.
 
 Debajo de la spec, en docs/spec-viva/ac.md, escribe únicamente la parte B con este texto:
-
-## Parte B
-
-### 1. Requisitos escritos y comprobados
-
-- Requisitos escritos por el agente: 25
-- Requisitos comprobados por mí abriendo el código: 1
-
-### 2. Incoherencias que aparecieron al escribirla
-
-- Si el servidor rechaza la sesión, se olvida; si no contesta, la persona acaba igual en el inicio de sesión pero la sesión sigue guardada en el navegador. Se ve al recargar con el servidor caído, en el requisito «Sesión guardada con el servidor caído».
-
-### 3. Lo que no supe decidir si era un bug o el contrato
-
-- No sé si llevar al login y aun así conservar la sesión es lo que se quería, para recuperarla al recargar, o si la pantalla está diciendo que la sesión se perdió cuando en el navegador sigue ahí.
-
-Lo único que abrí fue ese requisito: el arranque de la sesión en el frontend y el aviso de la pantalla de login. El 401 sí borra lo guardado; el fallo de conexión no. No paré el servidor para verlo.
-
-No cambies ningún otro archivo. No hagas commits. Al acabar, resume en pocas líneas qué quedé escrito.
 ```
