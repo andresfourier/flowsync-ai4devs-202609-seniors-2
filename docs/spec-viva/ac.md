@@ -288,33 +288,19 @@ El sistema SHALL, si al arrancar no puede comprobar la sesión por un fallo de c
 
 ---
 
-# Parte B
+## Parte B
 
-## 1. Requisitos escritos y comprobados
+### 1. Requisitos escritos y comprobados
 
-- Requisitos que escribió el agente: **25**
-- Requisitos que comprobó abriendo el código: **22**
+- Requisitos escritos por el agente: 25
+- Requisitos comprobados por mí abriendo el código: 1
 
-Los comprobó el agente leyendo el código de ambas capas; **ninguno se ha ejecutado** y la persona autora no ha revisado ninguno todavía. Quedaron sin comprobar: «Nombre opcional pero presente en la petición» (la escena de la clave ausente depende del comportamiento de la librería de validación, que no abrí), «Rechazo de credenciales incorrectas» (el 400 está comprobado, que el email desconocido responda igual que la contraseña equivocada no) y «Duración de los tokens» (vi que el alta de tokens no pide caducidad, no vi el valor por defecto del proveedor).
+### 2. Incoherencias que aparecieron al escribirla
 
-## 2. Incoherencias que aparecieron al escribirla
+- Si el servidor rechaza la sesión, se olvida; si no contesta, la persona acaba igual en el inicio de sesión pero la sesión sigue guardada en el navegador. Se ve al recargar con el servidor caído, en el requisito «Sesión guardada con el servidor caído».
 
-- Todas las respuestas satisfactorias de la API van envueltas en `data`, salvo el cierre de sesión, que devuelve `{ message }` sin envolver. Se ve en `POST /api/v1/account/logout`.
-- Un fallo de autenticación responde 401 en las rutas privadas, pero credenciales incorrectas en el login responde 400. Se ve comparando login con perfil.
-- La pantalla traduce cualquier 401 como «Tu sesión ha caducado» y cualquier 400 como «El email o la contraseña no son correctos», aunque ese 400 viniera de otra causa.
-- Las iniciales de «Ada Byron Lovelace» son `AB`, no `AL`: usa las dos primeras palabras, no la primera y la última. Se ve en el perfil.
-- Un nombre con dos espacios seguidos («Ada  Lovelace») o solo espacios no cumple la regla general de «dos iniciales»: da `AD` en el primero y vacío en el segundo, según lo que leí en el código. Sin ejecutar. Se ve en el círculo de iniciales del perfil.
-- El registro avisa «Entre 8 y 32 caracteres» y el servidor lo exige, pero el inicio de sesión no pone límites a la contraseña, y el formulario de registro tampoco impide escribir más de 32. Se ve en ambas pantallas.
-- Con contraseñas distintas y además un email inválido, el registro solo muestra el error de la confirmación: la comprobación local corta antes de que el servidor valide el resto. Se ve en `/register`.
-- En el inicio de sesión, tras un aviso de sesión perdida, el aviso desaparece cuando hay un intento fallido (lo sustituye el error del intento) pero reaparece mientras se envía un segundo intento. Se ve en `/login`.
-- Si el servidor está caído al arrancar, la persona ve «sesión no restaurada» en el login aunque el sistema sigue guardando su sesión. Se ve en `/login` tras recargar.
-- La pantalla de registro nunca muestra el motivo de una sesión perdida; solo la de inicio de sesión. Se ve al comparar las dos pantallas.
+### 3. Lo que no supe decidir si era un bug o el contrato
 
-## 3. Lo que no supe decidir si era un bug o el contrato
+- No sé si llevar al login y aun así conservar la sesión es lo que se quería, para recuperarla al recargar, o si la pantalla está diciendo que la sesión se perdió cuando en el navegador sigue ahí.
 
-- **Los tokens no caducan nunca.** Lectura A: es una decisión de producto para evitar reinicios de sesión; lectura B: es un descuido, porque un token robado vale para siempre. Desde fuera solo se ve esperando mucho tiempo.
-- **Los emails distinguen mayúsculas de minúsculas** (según lo que leí; no ejecutado). Lectura A: «Ada@x.com» y «ada@x.com» son personas distintas por diseño; lectura B: es un descuido que permite cuentas duplicadas y hace fallar el login por escribir distinto. Nada en el código dice que alguien lo decidiera.
-- **El rechazo de credenciales responde 400 y no 401.** Lectura A: es contrato, porque la pantalla ya depende de ese código para dar su mensaje; lectura B: es un valor por defecto de la librería que nadie eligió.
-- **Registrarse inicia sesión sin verificar el email.** Lectura A: es el flujo deseado para el MVP; lectura B: es una carencia de seguridad que nadie ha anotado.
-- **No hay límite de intentos de inicio de sesión visible.** Lectura A: está fuera del alcance del MVP; lectura B: es un hueco. Solo se vería lanzando muchos intentos, y no lo he hecho.
-- **Nombre de solo espacios por la API.** Lectura A: se guarda tal cual y es responsabilidad de quien llama; lectura B: debería normalizarse como hace la pantalla. La pantalla recorta los espacios, la API no.
+Lo único que abrí fue ese requisito: el arranque de la sesión en el frontend y el aviso de la pantalla de login. El 401 sí borra lo guardado; el fallo de conexión no. No paré el servidor para verlo.
