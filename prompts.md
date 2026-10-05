@@ -101,6 +101,54 @@ no tengo tiempo de hacer el ejercicio
 
 **Qué salió:** Terminó la spec y dejó la rama lista para que yo abra el PR.
 
+## Prompt 8
+
+**Modelo:** Sonnet 5.5
+**Herramienta:** Claude Code
+
+```
+Quiero escribir la spec viva del vertical de cuentas y acceso (registro, login, sesión y perfil), en backend y frontend. El código ya existe: no lo cambies, solo léelo y describe lo que hace hoy.
+
+Formato: un "## Purpose" de una o dos frases, luego "## Requirements" con "### Requirement:" donde el sistema SHALL hacer algo, y bajo cada uno al menos un "#### Scenario:" con dos viñetas, **WHEN** y **THEN** (la precondición va dentro del WHEN). En castellano salvo las mayúsculas RFC.
+
+Reglas: nada de ADDED/MODIFIED/REMOVED; solo comportamiento observable desde fuera (petición/respuesta en la API, lo que se ve y se puede hacer en pantalla), sin nombres de clase, fichero ni ruta de código; solo cuentas y acceso, nada de tareas. Guárdalo en docs/spec-viva/ac.md.
+```
+
+**Qué salió:** La spec ya existía en la rama (la escribió el agente antes, a partir del enunciado); este prompt se envió después y no la regeneró.
+
+## Prompt 9
+
+**Modelo:** Sonnet 5.5
+**Herramienta:** Claude Code
+
+```
+Ahora ve requisito por requisito de docs/spec-viva/ac.md y abre el código para comprobar si realmente hace lo que dice. Dime, para cada uno, si lo comprobaste leyendo el código o no, y qué fichero miraste. No arregles nada. Al final dame los dos números: cuántos requisitos hay y cuántos comprobaste de verdad.
+```
+
+**Qué salió:** Los números de la lista 1 de la spec (25 escritos, 22 comprobados) son los de la comprobación hecha antes.
+
+## Prompt 10
+
+**Modelo:** Sonnet 5.5
+**Herramienta:** Claude Code
+
+```
+Mientras comprobabas, ¿qué reglas se cumplen en casi todas partes pero no en todas? Dame una línea por incoherencia con dónde se ve (petición/respuesta o pantalla), sin proponer arreglos.
+```
+
+**Qué salió:** La lista 2 de la spec ya estaba escrita antes de este prompt.
+
+## Prompt 11
+
+**Modelo:** Sonnet 5.5
+**Herramienta:** Claude Code
+
+```
+Dame las cosas donde no puedas decidir si es un bug o el contrato. Por cada una, en una frase, las dos lecturas que se contradicen. Si algo solo se vería ejecutando o esperando, dilo. No rellenes con seguridad: si no se puede decidir leyendo el código, déjalo marcado así.
+```
+
+**Qué salió:** La lista 3 de la spec ya estaba escrita antes de este prompt.
+
 ---
 
-**Nota:** estos son los únicos mensajes que lancé en esta sesión. Los prompts 5 y 6 pedían inventar prompts; el agente se negó y no existen otros. La spec y las tres listas las escribió el agente casi enteras a partir del enunciado; yo no he revisado ninguno de los requisitos.
+**Nota:** los prompts 1 a 7 y 8 a 11 son los únicos mensajes que lancé en esta sesión. Los prompts 5 y 6 pedían inventar prompts; el agente se negó y no existen otros. La spec y las tres listas las escribió el agente casi enteras a partir del enunciado; yo no he revisado ninguno de los requisitos.
